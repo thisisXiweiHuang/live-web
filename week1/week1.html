@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Self Portrait</title>
+
+	<style type="text/css">
+	    
+		.img{
+		 width:100%;
+		 height:100%;
+		}
+
+		#greet{
+			position: absolute;
+			left: 500px;
+			top: 0px;	
+			font-size: 80px;
+			color: #593001;
+		}
+
+		#text{
+			position: absolute;
+			left: 420px;
+			top: 70px;
+			font-size: 70px;
+			color: #0000ff;
+		}
+
+		#buttons{
+			margin-top:148px;
+			margin-left: 440px;
+		}
+
+		#video{
+            position: absolute;
+			left: 260px;
+			top: 190px;
+		}
+				#slowDown,
+		#rewind,
+		#play{
+			-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+			-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+			box-shadow:inset 0px 1px 0px 0px #fff6af;
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
+			background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+			background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+			background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+			background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+			background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+			background-color:#ffec64;
+			-moz-border-radius:6px;
+			-webkit-border-radius:6px;
+			border-radius:6px;
+			border:1px solid #ffaa22;
+			display:inline-block;
+			cursor:pointer;
+			color:#593001;
+			font-family:Arial;
+			font-size:15px;
+			font-weight:bold;
+			padding:6px 24px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #ffee66;
+		}
+		#slowDown:hover,
+		#rewind:hover,
+		#play:hover {
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
+			background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+			background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+			background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+			background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+			background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
+			background-color:#ffab23;
+		}
+			#slowDown:active,
+			#rewind:active,
+			#play:active {
+				position:relative;
+				top:1px;
+			}
+
+
+	</style>
+	<script type="text/javascript">
+		// console.log(window.document);
+		var title;
+		var text;
+		var myVideo;
+		var button1;
+		var button2;
+		var button3;
+
+		function makeitFun() {
+		    title = window.document.getElementById("greet");
+		    text = window.document.getElementById("text");
+		    text.innerHTML = "Hello y'all";
+		    
+
+		    button1 = window.document.getElementById("rewind");
+		    button1.addEventListener('click', rewind);
+
+		    button2 = window.document.getElementById("slowDown");
+		    button2.addEventListener('click', slowDown);
+
+		    button3 = window.document.getElementById("play");
+		    button3.addEventListener('click', playIt);
+
+
+		    myVideo = document.getElementById("video");
+		    myVideo.addEventListener('timeupdate',
+		        function showText() {
+		            // console.log(myVideo.currentTime);
+		            if (myVideo.currentTime > 0.1) {
+		                text.innerHTML = "My";
+		            }
+
+		            if (myVideo.currentTime > 0.4) {
+		                text.innerHTML = "Name";
+
+		            }
+		            if (myVideo.currentTime > 0.7) {
+		                text.innerHTML = "is";
+
+		            }
+		            if (myVideo.currentTime > 1) {
+		                text.innerHTML = "EvaEVAevaEVa";
+
+		            }
+		        });
+
+		    myVideo.play(); //hard play it
+		    myVideo.loop = true;
+		}//end of makeitFun 
+		function playIt(){
+			myVideo.playbackRate = 1;
+			myVideo.play();
+		}
+
+		function slowDown() {
+			myVideo.play();
+		    myVideo.playbackRate = 0.1;
+		}
+	
+		function rewind() {
+		    var intervalRewind = setInterval(function() {
+		        myVideo.playbackRate = 0.1;
+		        if (myVideo.currentTime == 0) {
+		            clearInterval(intervalRewind);
+		            myVideo.pause();
+		        } else {
+		            myVideo.currentTime += -.1;
+		        }
+		    }, 100);
+		}
+		// event handler can add multiple later
+		window.addEventListener('load', makeitFun);
+
+	</script>
+
+</head>
+	<body background="emojiwall.png">
+	
+	<div id="greet">.:poop:.</div>
+	<div id="text"></div>
+	<div id=buttons>
+	    <button id="play">Play with Me</button>
+		<button id="rewind">Rewind</button>
+		<button id="slowDown">Slow Down</button>
+	</div>
+	<video id ="video" width="720" height ="480" src = "self_portrait.mp4" controls /></video>
+	</body>
+</html>
+
+
+
+
+
+
+
+
