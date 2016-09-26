@@ -1,0 +1,78 @@
+<html>
+	<head>
+	<link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
+	<style>
+
+	#messages{
+		position: absolute;
+		left: 21%;
+		top: 20%;
+		font-size: 100px;
+		font-family: 'Baloo Bhaina', cursive;
+		color:orange;
+	}
+
+	#message{
+		margin-top: 5%;
+		margin-left:35%;
+		width: 400px ;
+		height: 40px;
+		font-size: 35px;
+		border: 2px solid grey;
+		font-family: 'Baloo Bhaina', cursive;
+		color:orange;
+	}
+
+	#submit{
+		margin-left:500px;
+	}
+
+	</style>
+
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+		
+			var socket = io.connect();
+			
+			socket.on('connect', function() {
+				console.log("Connected");
+			});
+
+			// Receive from any event
+			socket.on('chatmessage', function (data) {
+			console.log(data);
+			var doc = document.getElementById('messages'); //new document object
+			doc.innerHTML =  data;
+           //holds the last messsage on screen
+            var res = data.replace(/type| miss|love|yellow/g,"&#x1F49B;");
+
+            doc.innerHTML = res; //write heart emojis
+			});
+		
+			var sendmessage  = function(message) {
+				console.log("chatmessage: " + message);
+				socket.emit('chatmessage', message);
+			};
+
+			function submit() { 
+		        sendmessage(document.getElementById('message').value);
+		        document.getElementById("message").value = "";    
+		    }
+
+		    //for submiting by pressing enter
+		     function checkSubmit(e) {
+		        if (e.keyCode == 13) {
+		            submit();
+		        }
+		    }
+
+	
+		</script>	
+	</head>
+ <body>
+ <div id="messages">
+&#x1F49B; TypeType =)
+ </div>
+ <input type="text" id="message" onKeyPress="return checkSubmit(event)">
+ </body>
+</html>
