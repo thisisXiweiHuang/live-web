@@ -1,0 +1,85 @@
+<html>
+	<style>
+    #container{
+	padding-top: 5%;
+	margin-left:8%;
+    }
+
+    #canvasone, #canvastwo{
+    background-color: #d4ddde;
+    border: 2px solid grey;
+    /*background: black;*/
+    }
+
+    button {
+	  background-color: #333;
+	  border: none;
+	  color: white;
+	  padding: 1em;
+	  margin: 1em;
+	  border-radius: .5em;
+	}
+	button:hover {
+	  background-color: #97b5c7;
+	  border: none;
+	  color: #4f484f;
+	  padding: 1em;
+	  margin: 1em;
+	  border-radius: .5em;
+	}
+
+	.holder {
+	  text-align: center;
+	}
+
+	h3 {
+	  text-align: center;
+	  line-height: 1.5;
+	}
+
+	#result {
+	  text-align: center;
+	  font-size: 2em;
+	  color: #754651;
+	  line-height: 1.5;
+	}
+
+	</style>
+
+	<head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/draw.js"></script>					
+	</head>
+
+	<body>
+		<h3>Draw the Words</h3>
+		<div id="result"></div>
+			<div class="holder">
+				<button type='Submit' onClick="randGen()">Generate!</button>
+				<button type="Reset" onClick="Reset()">Reset</button>
+				<button id ="eraseButton">Erase</button>
+
+			</div>
+		
+	    <div id="container">
+	 		<canvas id="canvasone" width="500" height="500"></canvas>
+	 	</div>
+
+ 		<script type="text/javascript">
+		var myArray = ['tree', 'headphone', 'saw', 'vest', 'a television', 'coffee table', 'a mug', 'stairs', 'bunny', 'laser cutter', 'lamb', 'sail boat', 'foam board', 'phone' ];
+
+		var output = document.getElementById("result");
+		var randGen = function () {
+		  	output.innerHTML = " ";
+		  	var randi = myArray[Math.round(Math.random() * (myArray.length - 1))];
+		    output.innerHTML = randi;
+		};
+
+		var Reset = function() {
+		  output.innerHTML = " ";
+		};
+ 		</script>
+ 			</body>
+
+</html>
+
