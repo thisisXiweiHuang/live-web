@@ -1,30 +1,42 @@
-var http = require('http');
+var https = require('https');
 var fs = require('fs'); // Using the filesystem module
-var httpServer = http.createServer(requestHandler);
-var url = require('url');
-httpServer.listen(8083);
+var url =  require('url');
 
-function requestHandler(req, res) {
+var options = {
+  key: fs.readFileSync('my-key.pem'),
+  cert: fs.readFileSync('my-cert.pem')
+};
 
+function handleIt(req, res) {
 	var parsedUrl = url.parse(req.url);
-	console.log("The Request is: " + parsedUrl.pathname);
-		
-	fs.readFile(__dirname + parsedUrl.pathname, 
+
+	var path = parsedUrl.pathname;
+	if (path == "/") {
+		path = "index.html";
+	}
+
+	fs.readFile(__dirname + path,
+
 		// Callback function for reading
-		function (err, data) {
+		function (err, fileContents) {
 			// if there is an error
 			if (err) {
 				res.writeHead(500);
-				return res.end('Error loading ' + parsedUrl.pathname);
+				return res.end('Error loading ' + req.url);
 			}
 			// Otherwise, send the data, the contents of the file
 			res.writeHead(200);
-			res.end(data);
+			res.end(fileContents);
   		}
-  	);
+  	);	
+	
+	// Send a log message to the console
+	console.log("Got a request " + req.url);
 }
 
-console.log("Server is running and waiting");
+var httpServer = https.createServer(options, handleIt);
+httpServer.listen(8080);
+
 
 // WebSocket Portion
 // WebSockets work with the HTTP server
@@ -40,15 +52,13 @@ io.sockets.on('connection',
 	
 		// When this user "send" from clientside javascript, we get a "message"
 		// client side: socket.send("the message");  or socket.emit('message', "the message");
-		socket.on('mousemove',function(younameit){
-		// console.log(younameit);
-		// socket.broadcast.emit('mousemove', younameit);
-		io.sockets.emit('mousemove', younameit);
+		socket.on('drawing',function(younameit){
+		io.sockets.emit('drawing',younameit);
+
 		});
 		
 		socket.on('disconnect', function() {
-		console.log("Client has disconnected");
+			console.log("Client has disconnected");
 		});
 	}
 );
-	
