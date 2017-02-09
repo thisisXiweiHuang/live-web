@@ -22,13 +22,14 @@ function init() {
   info.style.top = '10px';
   info.style.width = '100%';
   info.style.textAlign = 'center';
-  info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - video demo. playing <a href="http://durian.blender.org/" target="_blank">sintel</a> trailer';
+  // info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> - video demo. playing <a href="http://durian.blender.org/" target="_blank">sintel</a> trailer';
   container.appendChild( info );
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
   camera.position.z = 1000;
   scene = new THREE.Scene();
   video = document.getElementById( 'video' );
   //
+  img = document.getElementById('img');
   image = document.createElement( 'canvas' );
   image.width = 480;
   image.height = 204;
@@ -51,12 +52,12 @@ function init() {
   //
   var plane = new THREE.PlaneGeometry( 480, 204, 4, 4 );
   mesh = new THREE.Mesh( plane, material );
-  mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.5;
+  mesh.scale.x = mesh.scale.y = mesh.scale.z = 2.5;
   scene.add(mesh);
   mesh = new THREE.Mesh( plane, materialReflection );
   mesh.position.y = -306;
   mesh.rotation.x = - Math.PI;
-  mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.5;
+  mesh.scale.x = mesh.scale.y = mesh.scale.z = 2.5;
   scene.add( mesh );
   //
   var separation = 150;
@@ -113,11 +114,11 @@ function render() {
   camera.position.x += ( mouseX - camera.position.x ) * 0.05;
   camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
   camera.lookAt( scene.position );
-  if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
-    imageContext.drawImage( video, 0, 0 );
-    if ( texture ) texture.needsUpdate = true;
-    if ( textureReflection ) textureReflection.needsUpdate = true;
-  }
+  // if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
+  imageContext.drawImage( video, 0, 0 );
+    // if ( texture ) texture.needsUpdate = true;
+    // if ( textureReflection ) textureReflection.needsUpdate = true;
+  // }
   imageReflectionContext.drawImage( image, 0, 0 );
   imageReflectionContext.fillStyle = imageReflectionGradient;
   imageReflectionContext.fillRect( 0, 0, 480, 204 );
